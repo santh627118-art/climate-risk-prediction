@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment variables
+.env
+
+# VS Code
+.vscode/
+
+# Large datasets
+*.zip
+*.rar
+
+# Model files
+*.pkl
+*.joblib
+
+# Node
+node_modules/
+
+# Build files
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
