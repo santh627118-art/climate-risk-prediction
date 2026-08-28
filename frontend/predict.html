@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Predict Risk | Climate Risk</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        .predict-page {
+            padding: 55px 8%;
+            min-height: calc(100vh - 78px);
+            background: #06111f;
+        }
+
+        .predict-header {
+            margin-bottom: 35px;
+        }
+
+        .predict-header h1 {
+            font-size: 38px;
+            margin: 8px 0;
+        }
+
+        .predict-header p {
+            color: #8999a8;
+            font-size: 13px;
+        }
+
+        .predict-layout {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 20px;
+        }
+
+        .predict-card {
+            background: linear-gradient(145deg, #102438, #091725);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .predict-card h2 {
+            font-size: 19px;
+            margin-bottom: 6px;
+        }
+
+        .predict-card > p {
+            color: #8999a8;
+            font-size: 11px;
+            margin-bottom: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #aebbc8;
+            font-size: 11px;
+            margin-bottom: 8px;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 12px 13px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.09);
+            background: #071522;
+            color: #d5dee7;
+            outline: none;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            border-color: rgba(66,226,123,0.5);
+        }
+
+        .predict-btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 6px;
+            background: #42e27b;
+            color: #04110b;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .predict-btn:hover {
+            box-shadow: 0 8px 25px rgba(66,226,123,0.18);
+        }
+
+        .result-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 430px;
+        }
+
+        .result-circle {
+            width: 145px;
+            height: 145px;
+            border-radius: 50%;
+            border: 2px solid #42e27b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 0 50px rgba(66,226,123,0.12);
+            margin-bottom: 25px;
+        }
+
+        .result-circle strong {
+            font-size: 40px;
+            color: #42e27b;
+        }
+
+        .result-circle span {
+            color: #718394;
+            font-size: 9px;
+        }
+
+        .result-card h2 {
+            margin-bottom: 7px;
+        }
+
+        .result-card > p {
+            color: #8999a8;
+            font-size: 12px;
+            max-width: 400px;
+        }
+
+        .risk-result {
+            margin-top: 20px;
+            padding: 7px 18px;
+            border-radius: 20px;
+            background: rgba(66,226,123,0.1);
+            color: #42e27b;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .result-note {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            color: #617282;
+            font-size: 10px;
+            width: 100%;
+        }
+
+        @media (max-width: 850px) {
+
+            .predict-layout {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <div class="logo">
+
+            <div class="logo-icon">◈</div>
+
+            <div>
+                <h2>Climate Risk</h2>
+                <span>Maharashtra Intelligence</span>
+            </div>
+
+        </div>
+
+
+        <nav class="nav-links">
+
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="map.html">Risk Map</a>
+            <a href="predict.html" class="active">Predict</a>
+            <a href="reports.html">Reports</a>
+            <a href="#">About</a>
+
+        </nav>
+
+
+        <div class="auth-links">
+
+            <a href="login.html">Login</a>
+
+            <a href="register.html" class="signup-btn">
+                Sign Up
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- PREDICTION PAGE -->
+
+    <main class="predict-page">
+
+        <div class="predict-header">
+
+            <div class="section-label">
+                AI RISK PREDICTION
+            </div>
+
+            <h1>
+                Predict Climate Risk
+            </h1>
+
+            <p>
+                Select a district and provide climate indicators
+                to generate a risk assessment.
+            </p>
+
+        </div>
+
+
+        <section class="predict-layout">
+
+
+            <!-- INPUT -->
+
+            <div class="predict-card">
+
+                <h2>
+                    Prediction Inputs
+                </h2>
+
+                <p>
+                    Enter the required climate information.
+                </p>
+
+
+                <form id="predictionForm">
+
+                    <div class="form-group">
+
+                        <label>
+                            SELECT DISTRICT
+                        </label>
+
+                        <select id="district">
+
+                            <option value="">
+                                Choose district
+                            </option>
+
+                            <option>Mumbai</option>
+                            <option>Pune</option>
+                            <option>Nagpur</option>
+                            <option>Nashik</option>
+                            <option>Ratnagiri</option>
+                            <option>Kolhapur</option>
+                            <option>Thane</option>
+                            <option>Solapur</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            RAINFALL (mm)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="rainfall"
+                            placeholder="Enter rainfall"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            TEMPERATURE (°C)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="temperature"
+                            placeholder="Enter temperature"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            POPULATION DENSITY
+                        </label>
+
+                        <input
+                            type="number"
+                            id="population"
+                            placeholder="Enter population density"
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="predict-btn"
+                    >
+                        Generate Risk Prediction →
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- RESULT -->
+
+            <div class="predict-card result-card">
+
+                <div class="result-circle">
+
+                    <strong id="riskScore">
+                        --
+                    </strong>
+
+                    <span>
+                        RISK SCORE
+                    </span>
+
+                </div>
+
+
+                <h2 id="riskTitle">
+                    Awaiting Prediction
+                </h2>
+
+
+                <p id="riskDescription">
+                    Enter the required information and
+                    generate a climate risk assessment.
+                </p>
+
+
+                <div
+                    class="risk-result"
+                    id="riskLevel"
+                >
+                    NO RESULT
+                </div>
+
+
+                <div class="result-note">
+
+                    Prediction results will be generated
+                    using the climate risk assessment model.
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="footer-main">
+
+            <div>
+
+                <div class="footer-logo">
+                    <span>◈</span>
+                    Climate Risk
+                </div>
+
+                <p>
+                    AI-powered climate risk assessment
+                    for Maharashtra.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="index.html">Home</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="map.html">Risk Map</a>
+                <a href="predict.html">Predict</a>
+                <a href="reports.html">Reports</a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 Climate Risk Prediction System
+            </span>
+
+            <span>
+                Climate Intelligence Platform
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        const form =
+            document.getElementById("predictionForm");
+
+        form.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const district =
+                document.getElementById("district").value;
+
+            const rainfall =
+                document.getElementById("rainfall").value;
+
+            const temperature =
+                document.getElementById("temperature").value;
+
+            const population =
+                document.getElementById("population").value;
+
+
+            if (!district || !rainfall ||
+                !temperature || !population) {
+
+                alert("Please fill all the fields.");
+
+                return;
+            }
+
+
+            /*
+                Temporary frontend demonstration.
+
+                Later this will call the backend
+                machine-learning prediction API.
+            */
+
+            const score =
+                Math.floor(
+                    Math.random() * 40
+                ) + 50;
+
+
+            let level;
+
+            if (score >= 75) {
+
+                level = "HIGH RISK";
+
+            } else if (score >= 55) {
+
+                level = "MEDIUM RISK";
+
+            } else {
+
+                level = "LOW RISK";
+
+            }
+
+
+            document.getElementById("riskScore")
+                .textContent = score;
+
+
+            document.getElementById("riskTitle")
+                .textContent =
+                district + " Risk Assessment";
+
+
+            document.getElementById("riskLevel")
+                .textContent = level;
+
+
+            document.getElementById("riskDescription")
+                .textContent =
+                "The selected district has been assessed using the provided climate indicators.";
+
+        });
+
+    </script>
+
+</body>
+
+</html>

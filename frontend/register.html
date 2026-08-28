@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register | Climate Risk</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #06111f;
+            padding: 40px;
+        }
+
+        .auth-card {
+            width: 430px;
+            background: linear-gradient(145deg, #102438, #091725);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 35px;
+        }
+
+        .auth-card h1 {
+            margin-bottom: 8px;
+        }
+
+        .auth-card > p {
+            color: #8999a8;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            color: #aebbc8;
+            font-size: 11px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            background: #071522;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 6px;
+            color: white;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: rgba(66,226,123,0.5);
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 6px;
+            background: #42e27b;
+            color: #04110b;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .auth-btn:hover {
+            box-shadow: 0 8px 25px rgba(66,226,123,0.18);
+        }
+
+        .auth-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #8999a8;
+            font-size: 12px;
+        }
+
+        .auth-link a {
+            color: #42e27b;
+        }
+
+        .terms {
+            color: #657687;
+            font-size: 9px;
+            margin: 15px 0;
+            line-height: 1.5;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="auth-page">
+
+
+    <div class="auth-card">
+
+        <div class="section-label">
+            CLIMATE INTELLIGENCE
+        </div>
+
+        <h1>
+            Create Account
+        </h1>
+
+        <p>
+            Register to access climate risk
+            assessments and reports.
+        </p>
+
+
+        <form id="registerForm">
+
+
+            <div class="form-group">
+
+                <label>
+                    FULL NAME
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    EMAIL
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    ROLE
+                </label>
+
+                <select id="role">
+
+                    <option value="">
+                        Select role
+                    </option>
+
+                    <option>
+                        Student
+                    </option>
+
+                    <option>
+                        Researcher
+                    </option>
+
+                    <option>
+                        Government / Official
+                    </option>
+
+                    <option>
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    PASSWORD
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Create a password"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    CONFIRM PASSWORD
+                </label>
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm your password"
+                    required
+                >
+
+            </div>
+
+
+            <p class="terms">
+                By creating an account, you agree to use
+                the platform responsibly and only for
+                authorized purposes.
+            </p>
+
+
+            <button
+                type="submit"
+                class="auth-btn"
+            >
+                Create Account →
+            </button>
+
+
+        </form>
+
+
+        <div class="auth-link">
+
+            Already have an account?
+
+            <a href="login.html">
+                Login
+            </a>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+    document
+        .getElementById("registerForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const password =
+                document.getElementById("password").value;
+
+            const confirmPassword =
+                document.getElementById("confirmPassword").value;
+
+
+            if (password !== confirmPassword) {
+
+                alert("Passwords do not match.");
+
+                return;
+
+            }
+
+
+            alert(
+                "Registration form submitted. Backend authentication will be connected next."
+            );
+
+        });
+
+</script>
+
+
+</body>
+
+</html>
