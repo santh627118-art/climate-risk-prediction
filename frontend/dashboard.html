@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head> 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Climate Risk</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* CLEAN DASHBOARD */
+
+.dashboard-page {
+    padding: 40px 7%;
+}
+
+.dashboard-header {
+    margin-bottom: 25px;
+}
+
+.dashboard-header h1 {
+    font-size: 36px;
+}
+
+.dashboard-header p {
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.dashboard-date {
+    display: none;
+}
+
+
+/* SMALL STAT CARDS */
+
+.dashboard-stats {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.stat-box {
+    padding: 18px 20px;
+    border-radius: 8px;
+}
+
+.stat-box h2 {
+    margin: 6px 0 0;
+    font-size: 30px;
+}
+
+
+/* MAIN AREA */
+
+.dashboard-main {
+    grid-template-columns: 1.5fr 0.8fr;
+    gap: 18px;
+}
+
+.dashboard-panel {
+    padding: 22px;
+    border-radius: 9px;
+}
+
+
+/* DISTRICT LINES */
+
+.district-list {
+    gap: 7px;
+}
+
+.district {
+    grid-template-columns: 1fr 180px 75px;
+    padding: 12px 14px;
+    background: transparent;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    border-radius: 0;
+}
+
+.district:last-child {
+    border-bottom: none;
+}
+
+.district:hover {
+    transform: none;
+    background: rgba(66, 226, 123, 0.04);
+}
+
+.district-name {
+    font-size: 13px;
+}
+
+.risk-bar-small {
+    height: 4px;
+}
+
+.risk-badge {
+    font-size: 9px;
+    padding: 5px 8px;
+}
+
+
+/* CHART */
+
+.risk-chart {
+    height: 260px;
+}
+        .stat-clickable {
+    cursor: pointer;
+}
+
+.stat-clickable::after {
+    content: "→";
+    position: absolute;
+    right: 18px;
+    bottom: 16px;
+    color: #526577;
+    font-size: 16px;
+    transition: 0.2s ease;
+}
+
+.stat-clickable:hover::after {
+    color: #42e27b;
+    transform: translateX(4px);
+}
+        .dashboard-page {
+            padding: 55px 8%;
+            background: #06111f;
+            min-height: calc(100vh - 78px);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 35px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 38px;
+            margin: 8px 0;
+        }
+
+        .dashboard-header p {
+            color: #8999a8;
+            font-size: 13px;
+        }
+
+        .dashboard-date {
+            color: #8999a8;
+            font-size: 11px;
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 9px 14px;
+            border-radius: 6px;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 35px;
+        }
+
+        .stat-box {
+            background: linear-gradient(145deg, #102438, #091725);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 22px;
+        }
+
+        .stat-box span {
+            color: #718394;
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+
+        .stat-box h2 {
+            font-size: 34px;
+            margin: 10px 0 3px;
+        }
+
+        .stat-box p {
+            color: #8999a8;
+            font-size: 11px;
+        }
+
+        .green {
+            color: #42e27b;
+        }
+
+        .red {
+            color: #ff6464;
+        }
+
+        .yellow {
+            color: #ffbd4a;
+        }
+
+        .dashboard-main {
+            display: grid;
+            grid-template-columns: 1.4fr 0.6fr;
+            gap: 20px;
+        }
+
+        .dashboard-panel {
+            background: #0c1b2b;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 25px;
+        }
+
+        .panel-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .panel-title h2 {
+            font-size: 18px;
+        }
+
+        .panel-title a {
+            color: #42e27b;
+            font-size: 11px;
+        }
+
+        .district-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .district {
+            display: grid;
+            grid-template-columns: 1fr 100px 80px;
+            align-items: center;
+            gap: 15px;
+            padding: 14px;
+            background: rgba(255,255,255,0.025);
+            border-radius: 7px;
+        }
+
+        .district-name {
+            font-size: 13px;
+        }
+
+        .risk-bar-small {
+            height: 5px;
+            background: #172b3d;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .risk-bar-small span {
+            display: block;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .bar-red {
+            width: 82%;
+            background: #ff6464;
+        }
+
+        .bar-yellow {
+            width: 61%;
+            background: #ffbd4a;
+        }
+
+        .bar-green {
+            width: 32%;
+            background: #42e27b;
+        }
+
+        .risk-badge {
+            text-align: center;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 5px 7px;
+            border-radius: 15px;
+        }
+
+        .badge-high {
+            color: #ff6464;
+            background: rgba(255,100,100,0.1);
+        }
+
+        .badge-medium {
+            color: #ffbd4a;
+            background: rgba(255,189,74,0.1);
+        }
+
+        .badge-low {
+            color: #42e27b;
+            background: rgba(66,226,123,0.1);
+        }
+
+        .risk-summary {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .summary-item {
+            padding: 18px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.025);
+        }
+
+        .summary-item-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 9px;
+        }
+
+        .summary-item span {
+            color: #8999a8;
+            font-size: 11px;
+        }
+
+        .summary-item strong {
+            font-size: 16px;
+        }
+
+        .summary-line {
+            height: 5px;
+            background: #172b3d;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .summary-line span {
+            display: block;
+            height: 100%;
+        }
+
+        .summary-high {
+            width: 67%;
+            background: #ff6464;
+        }
+
+        .summary-medium {
+            width: 76%;
+            background: #ffbd4a;
+        }
+
+        .summary-low {
+            width: 43%;
+            background: #42e27b;
+        }
+
+        @media (max-width: 900px) {
+
+            .dashboard-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .dashboard-page {
+                padding: 40px 6%;
+            }
+
+            .dashboard-header {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .district {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* CLIMATE INDICATORS */
+
+.climate-panel {
+    margin-top: 20px;
+}
+
+.panel-subtitle {
+    color: #718394;
+    font-size: 10px;
+    margin-top: 5px;
+}
+
+.indicator-status {
+    color: #42e27b;
+    background: rgba(66,226,123,0.08);
+    border: 1px solid rgba(66,226,123,0.15);
+    padding: 6px 10px;
+    border-radius: 15px;
+    font-size: 8px;
+    letter-spacing: 1px;
+}
+
+.indicator-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.indicator-card {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 18px;
+}
+
+.indicator-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.indicator-top span {
+    color: #8999a8;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.indicator-top strong {
+    color: #42e27b;
+    font-size: 15px;
+}
+
+.indicator-bar {
+    height: 5px;
+    background: #172b3d;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.indicator-bar span {
+    display: block;
+    height: 100%;
+    background: #42e27b;
+    border-radius: 10px;
+}
+
+.indicator-card small {
+    color: #617282;
+    font-size: 9px;
+}
+
+@media (max-width: 900px) {
+    .indicator-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .indicator-grid {    
+        grid-template-columns: 1fr;
+    }
+}
+.risk-chart {
+    height: 280px;
+    position: relative;
+}
+.district {
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.district:hover {
+    transform: translateX(5px);
+    background: rgba(66, 226, 123, 0.06);
+}
+.district-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.district-modal.active {
+    display: flex;
+}
+
+.district-modal-content {
+    position: relative;
+    width: 360px;
+    background: #0c1b2b;
+    border: 1px solid rgba(66, 226, 123, 0.2);
+    border-radius: 14px;
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    border: none;
+    background: transparent;
+    color: #8999a8;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.modal-label {
+    color: #42e27b;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+}
+
+.district-modal-content h2 {
+    margin: 10px 0 25px;
+    font-size: 28px;
+}
+
+.modal-risk {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 9px;
+}
+
+#modalRiskDot {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+}
+
+.modal-risk small,
+.modal-info span {
+    display: block;
+    color: #718394;
+    font-size: 10px;
+    margin-bottom: 5px;
+}
+
+.modal-risk strong {
+    font-size: 15px;
+}
+
+.modal-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.modal-info > div {
+    padding: 15px;
+    background: rgba(255,255,255,0.025);
+    border-radius: 8px;
+}
+
+.modal-info strong {
+    font-size: 12px;
+}
+.view-map-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 13px;
+    border: 1px solid rgba(66, 226, 123, 0.25);
+    border-radius: 6px;
+    background: rgba(66, 226, 123, 0.06);
+    color: #42e27b !important;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.view-map-btn:hover {
+    background: rgba(66, 226, 123, 0.12);
+    border-color: rgba(66, 226, 123, 0.5);
+    transform: translateY(-1px);
+}
+/* ENHANCED STAT CARDS */
+
+.stat-box {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s ease,
+                border-color 0.25s ease,
+                background 0.25s ease;
+}
+
+.stat-box:hover {
+    transform: translateY(-4px);
+    border-color: rgba(66, 226, 123, 0.25);
+    background: rgba(255, 255, 255, 0.045);
+}
+
+.stat-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background: rgba(66, 226, 123, 0.08);
+    color: #42e27b;
+    font-size: 14px;
+}
+
+.stat-high .stat-icon {
+    color: #ff6464;
+    background: rgba(255, 100, 100, 0.08);
+}
+
+.stat-medium .stat-icon {
+    color: #ffbd4a;
+    background: rgba(255, 189, 74, 0.08);
+}
+
+.stat-low .stat-icon {
+    color: #42e27b;
+    background: rgba(66, 226, 123, 0.08);
+}
+
+.stat-box h2 {
+    margin: 8px 0 4px;
+}
+
+.stat-box p {
+    margin: 0;
+}
+    </style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <div class="logo">
+
+            <div class="logo-icon">◈</div>
+
+            <div>
+                <h2>Climate Risk</h2>
+                <span>Maharashtra Intelligence</span>
+            </div>
+
+        </div>
+
+
+        <nav class="nav-links">
+
+            <a href="index.html">Home</a>
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="map.html">Risk Map</a>
+            <a href="predict.html">Predict</a>
+            <a href="reports.html">Reports</a>
+            <a href="#">About</a>
+
+        </nav>
+
+
+        <div class="auth-links">
+
+            <a href="login.html">Login</a>
+
+            <a href="register.html" class="signup-btn">
+                Sign Up
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- DASHBOARD -->
+
+    <main class="dashboard-page">
+
+
+        <div class="dashboard-header">
+
+            <div>
+
+                <div class="section-label">
+                    CLIMATE INTELLIGENCE
+                </div>
+
+                <h1>
+                    Risk Dashboard
+                </h1>
+
+                <p>
+                    Monitor district-level climate risk
+                    across Maharashtra.
+                </p>
+
+            </div>
+
+
+            <div class="dashboard-date">
+                ● System Updated Today
+            </div>
+
+        </div>
+
+
+     <!-- STATS -->
+<section class="dashboard-stats">
+
+    <div class="stat-box">
+        <span>TOTAL DISTRICTS</span>
+        <h2>36</h2>
+    </div>
+
+    <div class="stat-box">
+        <span>HIGH RISK</span>
+        <h2 class="red">12</h2>
+    </div>
+
+    <div class="stat-box">
+        <span>MEDIUM RISK</span>
+        <h2 class="yellow">15</h2>
+    </div>
+
+    <div class="stat-box">
+        <span>LOW RISK</span>
+        <h2 class="green">9</h2>
+    </div>
+
+</section>
+
+
+
+
+        <!-- MAIN DASHBOARD -->
+
+        <section class="dashboard-main">
+
+
+            <!-- DISTRICTS -->
+
+            <div class="dashboard-panel">
+
+                <div class="panel-title">
+
+                    <h2>
+                        District Risk Assessment
+                    </h2>
+
+                    <a href="map.html" class="view-map-btn">
+    Open Risk Map →
+</a>
+
+                </div>
+
+
+               <div class="district-list">
+
+    <div class="district" onclick="showDistrictRisk('Mumbai', 'HIGH')">
+        <div class="district-name">Mumbai</div>
+
+        <div class="risk-bar-small">
+            <span class="bar-red"></span>
+        </div>
+
+        <div class="risk-badge badge-high">HIGH</div>
+    </div>
+
+
+    <div class="district" onclick="showDistrictRisk('Pune', 'MEDIUM')">
+        <div class="district-name">Pune</div>
+
+        <div class="risk-bar-small">
+            <span class="bar-yellow"></span>
+        </div>
+
+        <div class="risk-badge badge-medium">MEDIUM</div>
+    </div>
+
+
+    <div class="district" onclick="showDistrictRisk('Nagpur', 'HIGH')">
+        <div class="district-name">Nagpur</div>
+
+        <div class="risk-bar-small">
+            <span class="bar-red"></span>
+        </div>
+
+        <div class="risk-badge badge-high">HIGH</div>
+    </div>
+
+
+    <div class="district" onclick="showDistrictRisk('Nashik', 'MEDIUM')">
+        <div class="district-name">Nashik</div>
+
+        <div class="risk-bar-small">
+            <span class="bar-yellow"></span>
+        </div>
+
+        <div class="risk-badge badge-medium">MEDIUM</div>
+    </div>
+
+
+    <div class="district" onclick="showDistrictRisk('Ratnagiri', 'LOW')">
+        <div class="district-name">Ratnagiri</div>
+
+        <div class="risk-bar-small">
+            <span class="bar-green"></span>
+        </div>
+
+        <div class="risk-badge badge-low">LOW</div>
+    </div>
+
+</div>
+
+
+            <!-- SUMMARY -->
+
+            <div class="dashboard-panel">
+
+                <div class="panel-title">
+
+                    <h2>
+                        Risk Distribution
+                    </h2>
+
+                </div>
+
+
+               <div class="risk-chart">
+    <canvas id="riskChart"></canvas>
+</div>
+            </div>
+
+        </section>
+        
+
+<div id="districtModal" class="district-modal">
+    <div class="district-modal-content">
+
+        <button class="modal-close" onclick="closeDistrictModal()">
+            ×
+        </button>
+
+        <span class="modal-label">DISTRICT RISK ASSESSMENT</span>
+
+        <h2 id="modalDistrictName">Mumbai</h2>
+
+        <div class="modal-risk">
+            <span id="modalRiskDot"></span>
+
+            <div>
+                <small>Current Risk Level</small>
+                <strong id="modalRiskLevel">HIGH</strong>
+            </div>
+        </div>
+
+        <div class="modal-info">
+            <div>
+                <span>Assessment Status</span>
+                <strong>Analysed</strong>
+            </div>
+
+            <div>
+                <span>Monitoring</span>
+                <strong>Active</strong>
+            </div>
+        </div>
+
+    </div>
+</div>
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="footer-main">
+
+            <div>
+
+                <div class="footer-logo">
+                    <span>◈</span>
+                    Climate Risk
+                </div>
+
+                <p>
+                    AI-powered climate risk assessment
+                    for Maharashtra.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="index.html">Home</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="map.html">Risk Map</a>
+                <a href="predict.html">Predict</a>
+                <a href="reports.html">Reports</a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 Climate Risk Prediction System
+            </span>
+
+            <span>
+                Climate Intelligence Platform
+            </span>
+
+        </div>
+
+    </footer>
+<script>
+    const ctx = document.getElementById('riskChart');
+
+    new Chart(ctx, {
+        type: 'doughnut',
+
+        data: {
+            labels: [
+                'High Risk',
+                'Medium Risk',
+                'Low Risk'
+            ],
+
+            datasets: [{
+                data: [12, 15, 9],
+                backgroundColor: [
+                    '#ff6464',
+                    '#ffbd4a',
+                    '#42e27b'
+                ],
+                borderWidth: 0,
+                hoverOffset: 8
+            }]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '68%',
+
+            plugins: {
+                legend: {
+                    position: 'bottom',
+
+                    labels: {
+                        color: '#8999a8',
+                        padding: 18,
+                        font: {
+                            size: 11
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+<script>
+  function showDistrictRisk(district, risk) {
+
+    document.getElementById('modalDistrictName').textContent = district;
+    document.getElementById('modalRiskLevel').textContent = risk;
+
+    const dot = document.getElementById('modalRiskDot');
+
+    if (risk === 'HIGH') {
+        dot.style.background = '#ff6464';
+    } 
+    else if (risk === 'MEDIUM') {
+        dot.style.background = '#ffbd4a';
+    } 
+    else {
+        dot.style.background = '#42e27b';
+    }
+
+    document.getElementById('districtModal')
+        .classList.add('active');
+}
+
+
+function closeDistrictModal() {
+    document.getElementById('districtModal')
+        .classList.remove('active');
+}
+</script>
+</body>
+
+</html>

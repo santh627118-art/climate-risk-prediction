@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reports | Climate Risk</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        .reports-page {
+            padding: 55px 8%;
+            min-height: calc(100vh - 78px);
+            background: #06111f;
+        }
+
+        .reports-header {
+            margin-bottom: 35px;
+        }
+
+        .reports-header h1 {
+            font-size: 38px;
+            margin: 8px 0;
+        }
+
+        .reports-header p {
+            color: #8999a8;
+            font-size: 13px;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .report-card {
+            background: linear-gradient(145deg, #102438, #091725);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 25px;
+        }
+
+        .report-card h2 {
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+
+        .report-card > p {
+            color: #8999a8;
+            font-size: 11px;
+            margin-bottom: 25px;
+        }
+
+        .report-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .report-row:last-child {
+            border-bottom: none;
+        }
+
+        .report-number {
+            width: 35px;
+            height: 35px;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #42e27b;
+            background: rgba(66,226,123,0.08);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .report-info {
+            flex: 1;
+        }
+
+        .report-info h3 {
+            font-size: 12px;
+        }
+
+        .report-info span {
+            color: #718394;
+            font-size: 10px;
+        }
+
+        .report-btn {
+            padding: 7px 12px;
+            border: 1px solid rgba(66,226,123,0.3);
+            border-radius: 5px;
+            color: #42e27b;
+            font-size: 10px;
+        }
+
+        .report-btn:hover {
+            background: rgba(66,226,123,0.08);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .summary-box {
+            padding: 20px;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+        }
+
+        .summary-box span {
+            color: #718394;
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
+
+        .summary-box h3 {
+            font-size: 28px;
+            margin-top: 8px;
+        }
+
+        .risk-high {
+            color: #ff6464;
+        }
+
+        .risk-medium {
+            color: #ffbd4a;
+        }
+
+        .risk-low {
+            color: #42e27b;
+        }
+
+        .generate-section {
+            margin-top: 20px;
+            padding: 28px;
+            border: 1px solid rgba(66,226,123,0.15);
+            border-radius: 10px;
+            background:
+                radial-gradient(
+                    circle at 80% 50%,
+                    rgba(66,226,123,0.08),
+                    transparent 35%
+                ),
+                #0c1b2b;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .generate-section h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .generate-section p {
+            color: #8999a8;
+            font-size: 11px;
+        }
+
+        .generate-btn {
+            padding: 12px 20px;
+            border-radius: 6px;
+            background: #42e27b;
+            color: #04110b;
+            font-size: 11px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .generate-btn:hover {
+            box-shadow: 0 8px 25px rgba(66,226,123,0.18);
+        }
+
+        @media (max-width: 800px) {
+
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .generate-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <div class="logo">
+
+            <div class="logo-icon">◈</div>
+
+            <div>
+                <h2>Climate Risk</h2>
+                <span>Maharashtra Intelligence</span>
+            </div>
+
+        </div>
+
+
+        <nav class="nav-links">
+
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="map.html">Risk Map</a>
+            <a href="predict.html">Predict</a>
+            <a href="reports.html" class="active">Reports</a>
+            <a href="#">About</a>
+
+        </nav>
+
+
+        <div class="auth-links">
+
+            <a href="login.html">Login</a>
+
+            <a href="register.html" class="signup-btn">
+                Sign Up
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- REPORTS -->
+
+    <main class="reports-page">
+
+        <div class="reports-header">
+
+            <div class="section-label">
+                CLIMATE REPORTING
+            </div>
+
+            <h1>
+                Climate Risk Reports
+            </h1>
+
+            <p>
+                Review climate risk assessments and
+                district-level analysis.
+            </p>
+
+        </div>
+
+
+        <section class="reports-grid">
+
+
+            <!-- RECENT REPORTS -->
+
+            <div class="report-card">
+
+                <h2>
+                    Recent Reports
+                </h2>
+
+                <p>
+                    Latest generated climate risk reports.
+                </p>
+
+
+                <div class="report-row">
+
+                    <div class="report-number">
+                        01
+                    </div>
+
+                    <div class="report-info">
+
+                        <h3>
+                            Maharashtra Risk Assessment
+                        </h3>
+
+                        <span>
+                            Updated today
+                        </span>
+
+                    </div>
+
+                    <a href="#" class="report-btn">
+                        View
+                    </a>
+
+                </div>
+
+
+                <div class="report-row">
+
+                    <div class="report-number">
+                        02
+                    </div>
+
+                    <div class="report-info">
+
+                        <h3>
+                            District Risk Summary
+                        </h3>
+
+                        <span>
+                            Updated today
+                        </span>
+
+                    </div>
+
+                    <a href="#" class="report-btn">
+                        View
+                    </a>
+
+                </div>
+
+
+                <div class="report-row">
+
+                    <div class="report-number">
+                        03
+                    </div>
+
+                    <div class="report-info">
+
+                        <h3>
+                            Climate Indicators Report
+                        </h3>
+
+                        <span>
+                            Updated recently
+                        </span>
+
+                    </div>
+
+                    <a href="#" class="report-btn">
+                        View
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- RISK SUMMARY -->
+
+            <div class="report-card">
+
+                <h2>
+                    Risk Summary
+                </h2>
+
+                <p>
+                    Current district-level risk distribution.
+                </p>
+
+
+                <div class="summary-grid">
+
+                    <div class="summary-box">
+
+                        <span>
+                            HIGH RISK
+                        </span>
+
+                        <h3 class="risk-high">
+                            12
+                        </h3>
+
+                    </div>
+
+
+                    <div class="summary-box">
+
+                        <span>
+                            MEDIUM RISK
+                        </span>
+
+                        <h3 class="risk-medium">
+                            15
+                        </h3>
+
+                    </div>
+
+
+                    <div class="summary-box">
+
+                        <span>
+                            LOW RISK
+                        </span>
+
+                        <h3 class="risk-low">
+                            9
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- GENERATE -->
+
+        <section class="generate-section">
+
+            <div>
+
+                <div class="section-label">
+                    REPORT GENERATION
+                </div>
+
+                <h2>
+                    Generate a new climate risk report
+                </h2>
+
+                <p>
+                    Create a report using the latest
+                    available climate risk assessment data.
+                </p>
+
+            </div>
+
+
+            <button
+                class="generate-btn"
+                onclick="generateReport()"
+            >
+                Generate Report →
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="footer-main">
+
+            <div>
+
+                <div class="footer-logo">
+                    <span>◈</span>
+                    Climate Risk
+                </div>
+
+                <p>
+                    AI-powered climate risk assessment
+                    for Maharashtra.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="index.html">Home</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="map.html">Risk Map</a>
+                <a href="predict.html">Predict</a>
+                <a href="reports.html">Reports</a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 Climate Risk Prediction System
+            </span>
+
+            <span>
+                Climate Intelligence Platform
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        function generateReport() {
+
+            alert(
+                "Report generation will be connected to the backend."
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>

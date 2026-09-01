@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Climate Risk Prediction System</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <div class="logo-icon">◈</div>
+
+            <div>
+                <h2>Climate Risk</h2>
+                <span>Maharashtra Intelligence</span>
+            </div>
+        </div>
+
+
+        <nav class="nav-links">
+
+            <a href="index.html" class="active">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="map.html">Risk Map</a>
+            <a href="predict.html">Predict</a>
+            <a href="reports.html">Reports</a>
+            <a href="#">About</a>
+
+        </nav>
+
+
+        <div class="auth-links">
+
+            <a href="login.html">Login</a>
+
+            <a href="register.html" class="signup-btn">
+                Sign Up
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= HERO ================= -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="eyebrow">
+                    <span></span>
+                    AI-POWERED CLIMATE INTELLIGENCE
+                </div>
+
+
+                <h1>
+                    Predict.
+                    <span>Prepare.</span>
+                    Protect.
+                </h1>
+
+
+                <p class="hero-description">
+                    AI-powered climate risk assessment for
+                    Maharashtra districts using climate,
+                    population and historical data.
+                </p>
+
+
+                <div class="hero-buttons">
+
+                    <a href="dashboard.html" class="primary-btn">
+                        Explore Dashboard
+                        <span>→</span>
+                    </a>
+
+                    <a href="map.html" class="secondary-btn">
+                        View Risk Map
+                    </a>
+
+                </div>
+
+
+                <div class="hero-status">
+
+                    <span class="online-dot"></span>
+
+                    <span>
+                        Climate monitoring system active
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- HERO VISUAL -->
+
+            <div class="hero-visual">
+
+                <div class="visual-glow"></div>
+
+                <div class="dashboard-preview">
+
+                    <div class="preview-header">
+
+                        <div>
+                            <span>RISK OVERVIEW</span>
+                            <h3>Maharashtra</h3>
+                        </div>
+
+                        <div class="live">
+                            <span></span>
+                            LIVE
+                        </div>
+
+                    </div>
+
+
+                    <!-- Fake map -->
+
+                    <div class="map-preview">
+
+                        <div class="map-shape">
+                            MH
+                        </div>
+
+                        <div class="map-point point-1"></div>
+                        <div class="map-point point-2"></div>
+                        <div class="map-point point-3"></div>
+                        <div class="map-point point-4"></div>
+
+                    </div>
+
+
+                    <div class="preview-stats">
+
+                        <div>
+                            <span>Districts</span>
+                            <strong>36</strong>
+                        </div>
+
+                        <div>
+                            <span>High Risk</span>
+                            <strong class="red-text">12</strong>
+                        </div>
+
+                        <div>
+                            <span>Updated</span>
+                            <strong>Today</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= RISK OVERVIEW ================= -->
+
+        <section class="risk-section">
+
+            <div class="section-top">
+
+                <div>
+
+                    <div class="section-label">
+                        CURRENT STATUS
+                    </div>
+
+                    <h2>
+                        Climate Risk Overview
+                    </h2>
+
+                    <p>
+                        District-wise climate risk assessment
+                        across Maharashtra.
+                    </p>
+
+                </div>
+
+
+                <a href="dashboard.html" class="view-link">
+                    View Dashboard →
+                </a>
+
+            </div>
+
+
+            <div class="risk-grid">
+
+
+                <!-- HIGH -->
+
+                <div class="risk-card high">
+
+                    <div class="risk-card-header">
+
+                        <div class="risk-icon">
+                            !
+                        </div>
+
+                        <span>
+                            HIGH RISK
+                        </span>
+
+                    </div>
+
+                    <h3>12</h3>
+
+                    <p>
+                        Districts requiring
+                        immediate attention
+                    </p>
+
+                    <div class="card-line"></div>
+
+                </div>
+
+
+                <!-- MEDIUM -->
+
+                <div class="risk-card medium">
+
+                    <div class="risk-card-header">
+
+                        <div class="risk-icon">
+                            ~
+                        </div>
+
+                        <span>
+                            MEDIUM RISK
+                        </span>
+
+                    </div>
+
+                    <h3>15</h3>
+
+                    <p>
+                        Districts requiring
+                        continued monitoring
+                    </p>
+
+                    <div class="card-line"></div>
+
+                </div>
+
+
+                <!-- LOW -->
+
+                <div class="risk-card low">
+
+                    <div class="risk-card-header">
+
+                        <div class="risk-icon">
+                            ✓
+                        </div>
+
+                        <span>
+                            LOW RISK
+                        </span>
+
+                    </div>
+
+                    <h3>9</h3>
+
+                    <p>
+                        Districts currently at
+                        lower risk levels
+                    </p>
+
+                    <div class="card-line"></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= MAP PREVIEW ================= -->
+
+        <section class="map-section">
+
+            <div class="map-heading">
+
+                <div>
+
+                    <div class="section-label">
+                        GEOSPATIAL INTELLIGENCE
+                    </div>
+
+                    <h2>
+                        Maharashtra Risk Map
+                    </h2>
+
+                    <p>
+                        Visualize district-wise climate
+                        risk through an interactive map.
+                    </p>
+
+                </div>
+
+                <a href="map.html" class="outline-btn">
+                    Open Full Map →
+                </a>
+
+            </div>
+
+
+            <div class="map-container">
+
+                <div class="map-overlay">
+
+                    <div class="legend-title">
+                        RISK LEVEL
+                    </div>
+
+                    <div class="legend">
+
+                        <div>
+                            <span class="legend-dot high-dot"></span>
+                            High
+                        </div>
+
+                        <div>
+                            <span class="legend-dot medium-dot"></span>
+                            Medium
+                        </div>
+
+                        <div>
+                            <span class="legend-dot low-dot"></span>
+                            Low
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="large-map-shape">
+                    MAHARASHTRA
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= ALERTS ================= -->
+
+        <section class="alerts-section">
+
+            <div class="section-top">
+
+                <div>
+
+                    <div class="section-label">
+                        MONITORING
+                    </div>
+
+                    <h2>
+                        Recent Alerts
+                    </h2>
+
+                </div>
+
+                <a href="reports.html" class="view-link">
+                    View Reports →
+                </a>
+
+            </div>
+
+
+            <div class="alerts-list">
+
+
+                <div class="alert">
+
+                    <div class="alert-indicator red"></div>
+
+                    <div class="alert-text">
+
+                        <h3>
+                            High flood risk detected
+                        </h3>
+
+                        <p>
+                            Climate indicators show elevated
+                            flood risk conditions.
+                        </p>
+
+                    </div>
+
+                    <span class="alert-time">
+                        Today
+                    </span>
+
+                </div>
+
+
+                <div class="alert">
+
+                    <div class="alert-indicator yellow"></div>
+
+                    <div class="alert-text">
+
+                        <h3>
+                            Rainfall indicators updated
+                        </h3>
+
+                        <p>
+                            Recent rainfall observations
+                            have been updated.
+                        </p>
+
+                    </div>
+
+                    <span class="alert-time">
+                        Today
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= QUICK ACTIONS ================= -->
+
+        <section class="quick-section">
+
+            <div class="quick-content">
+
+                <div class="section-label">
+                    CLIMATE INTELLIGENCE
+                </div>
+
+                <h2>
+                    Explore the climate risk system.
+                </h2>
+
+                <p>
+                    Analyse district-level risk,
+                    explore the interactive map and
+                    generate climate risk predictions.
+                </p>
+
+            </div>
+
+
+            <div class="quick-buttons">
+
+                <a href="map.html">
+                    <span>01</span>
+                    Explore Risk Map →
+                </a>
+
+                <a href="predict.html">
+                    <span>02</span>
+                    Predict Risk →
+                </a>
+
+                <a href="reports.html">
+                    <span>03</span>
+                    View Reports →
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-main">
+
+            <div>
+
+                <div class="footer-logo">
+                    <span>◈</span>
+                    Climate Risk
+                </div>
+
+                <p>
+                    AI-powered climate risk assessment
+                    for Maharashtra.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="index.html">Home</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="map.html">Risk Map</a>
+                <a href="predict.html">Predict</a>
+                <a href="reports.html">Reports</a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 Climate Risk Prediction System
+            </span>
+
+            <span>
+                Climate Intelligence Platform
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

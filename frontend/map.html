@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Risk Map | Climate Risk</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Leaflet -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+
+    <style>
+
+        .map-page {
+            padding: 55px 8%;
+            background: #06111f;
+            min-height: calc(100vh - 78px);
+        }
+
+        .map-page-header {
+            margin-bottom: 30px;
+        }
+
+        .map-page-header h1 {
+            font-size: 38px;
+            margin: 8px 0;
+        }
+
+        .map-page-header p {
+            color: #8999a8;
+            font-size: 13px;
+        }
+
+        .map-layout {
+            display: grid;
+            grid-template-columns: 1fr 260px;
+            gap: 20px;
+        }
+
+        .map-box {
+            height: 570px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: #0a1d2c;
+            position: relative;
+        }
+
+        #riskMap {
+            width: 100%;
+            height: 100%;
+        }
+
+        .map-controls {
+            background: #0c1b2b;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 24px;
+        }
+
+        .map-controls h2 {
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+
+        .map-controls > p {
+            color: #8999a8;
+            font-size: 11px;
+            margin-bottom: 25px;
+        }
+
+        .map-filter {
+            padding: 13px;
+            border-radius: 7px;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.06);
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .map-filter:hover {
+            border-color: rgba(66,226,123,0.4);
+        }
+
+        .filter-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .filter-high {
+            background: #ff6464;
+        }
+
+        .filter-medium {
+            background: #ffbd4a;
+        }
+
+        .filter-low {
+            background: #42e27b;
+        }
+
+        .filter-text {
+            color: #bdc9d3;
+            font-size: 12px;
+        }
+
+        .map-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .map-info span {
+            display: block;
+            color: #718394;
+            font-size: 9px;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .map-info strong {
+            font-size: 25px;
+        }
+
+        /* Leaflet styling */
+
+        .leaflet-container {
+            background: #0a1d2c;
+            font-family: Arial, sans-serif;
+        }
+
+        .leaflet-control-zoom a {
+            background: #0c1b2b !important;
+            color: #42e27b !important;
+            border-color: rgba(255,255,255,0.08) !important;
+        }
+
+        .leaflet-popup-content-wrapper,
+        .leaflet-popup-tip {
+            background: #0c1b2b;
+            color: white;
+        }
+
+        .leaflet-popup-content {
+            font-size: 12px;
+        }
+
+        @media (max-width: 900px) {
+
+            .map-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .map-controls {
+                order: -1;
+            }
+
+            .map-box {
+                height: 500px;
+            }
+        }
+.district-popup {
+    min-width: 170px;
+    padding: 5px;
+}
+
+.popup-label {
+    color: #42e27b;
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    margin-bottom: 5px;
+}
+
+.district-popup h3 {
+    margin: 0 0 12px;
+    font-size: 17px;
+    color: #ffffff;
+}
+
+.popup-risk {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    color: #bdc9d3;
+}
+
+.popup-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.high-dot {
+    background: #ef4444;
+}
+
+.medium-dot {
+    background: #f59e0b;
+}
+
+.low-dot {
+    background: #22c55e;
+}
+
+.popup-note {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: #718394;
+    font-size: 9px;
+}
+    </style>
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <div class="logo">
+
+            <div class="logo-icon">◈</div>
+
+            <div>
+                <h2>Climate Risk</h2>
+                <span>Maharashtra Intelligence</span>
+            </div>
+
+        </div>
+
+
+        <nav class="nav-links">
+
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="map.html" class="active">Risk Map</a>
+            <a href="predict.html">Predict</a>
+            <a href="reports.html">Reports</a>
+            <a href="#">About</a>
+
+        </nav>
+
+
+        <div class="auth-links">
+
+            <a href="login.html">Login</a>
+
+            <a href="register.html" class="signup-btn">
+                Sign Up
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAP PAGE -->
+
+    <main class="map-page">
+
+        <div class="map-page-header">
+
+            <div class="section-label">
+                GEOSPATIAL INTELLIGENCE
+            </div>
+
+            <h1>
+                Maharashtra Risk Map
+            </h1>
+
+            <p>
+                Explore district-wise climate risk
+                through an interactive map.
+            </p>
+
+        </div>
+
+
+        <section class="map-layout">
+
+
+            <!-- MAP -->
+
+            <div class="map-box">
+
+                <div id="riskMap"></div>
+
+            </div>
+
+
+            <!-- CONTROLS -->
+
+            <aside class="map-controls">
+<div class="risk-legend">
+    <div class="legend-item">
+        <span class="legend-color low-risk"></span>
+        <span>Low Risk</span>
+    </div>
+
+    <div class="legend-item">
+        <span class="legend-color medium-risk"></span>
+        <span>Medium Risk</span>
+    </div>
+
+    <div class="legend-item">
+        <span class="legend-color high-risk"></span>
+        <span>High Risk</span>
+    </div>
+</div>
+                <h2>Risk Levels</h2>
+
+                <p>
+                    Select a risk category to analyse
+                    affected districts.
+                </p>
+
+
+               <div class="map-filter" onclick="filterRisk('high')">
+    <span class="filter-dot filter-high"></span>
+    <span class="filter-text">
+        High Risk
+    </span>
+</div>
+
+<div class="map-filter" onclick="filterRisk('medium')">
+    <span class="filter-dot filter-medium"></span>
+    <span class="filter-text">
+        Medium Risk
+    </span>
+</div>
+
+<div class="map-filter" onclick="filterRisk('low')">
+    <span class="filter-dot filter-low"></span>
+    <span class="filter-text">
+        Low Risk
+    </span>
+</div>
+
+<div class="map-filter" onclick="showAllRisks()">
+    <span class="filter-dot" style="background:#9aa7b5;"></span>
+    <span class="filter-text">
+        Show All
+    </span>
+</div>
+
+
+                <div class="map-info">
+
+                    <span>
+                        DISTRICTS ANALYSED
+                    </span>
+
+                    <strong>
+                        36
+                    </strong>
+
+                </div>
+
+
+                <div class="map-info">
+
+                    <span>
+                        LAST UPDATED
+                    </span>
+
+                    <strong style="font-size:16px;">
+                        Today
+                    </strong>
+
+                </div>
+
+            </aside>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="footer-main">
+
+            <div>
+
+                <div class="footer-logo">
+                    <span>◈</span>
+                    Climate Risk
+                </div>
+
+                <p>
+                    AI-powered climate risk assessment
+                    for Maharashtra.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="index.html">Home</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="map.html">Risk Map</a>
+                <a href="predict.html">Predict</a>
+                <a href="reports.html">Reports</a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 Climate Risk Prediction System
+            </span>
+
+            <span>
+                Climate Intelligence Platform
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <!-- LEAFLET -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+
+    <script>
+
+        const map = L.map('riskMap').setView(
+            [19.7515, 75.7139],
+            6
+        );
+
+
+        L.tileLayer(
+            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {
+                attribution: '&copy; OpenStreetMap contributors'
+            }
+        ).addTo(map);
+
+
+       fetch('assets/data/maharashtra_districts.geojson')
+    .then(response => response.json())
+    .then(data => {
+function getDistrictName(feature) {
+    console.log("DISTRICT DATA:", feature.properties);
+
+    return (
+        feature.properties.DISTRICT ||
+        feature.properties.district ||
+        feature.properties.NAME ||
+        feature.properties.NAME_2 ||
+        ""
+    ).toLowerCase().trim();
+}
+
+function getDistrictRisk(feature) {
+    const district = getDistrictName(feature);
+
+    if (
+        district.includes("mumbai")
+    ) {
+        return "high";
+    }
+
+    if (
+        district.includes("nagpur")
+    ) {
+        return "high";
+    }
+
+    if (
+        district.includes("pune")
+    ) {
+        return "medium";
+    }
+
+    if (
+        district.includes("nashik")
+    ) {
+        return "medium";
+    }
+
+    if (
+        district.includes("ratnagiri")
+    ) {
+        return "low";
+    }
+
+    return "low";
+}
+
+function getRiskColor(risk) {
+    if (risk === "high") return "#ef4444";
+    if (risk === "medium") return "#f59e0b";
+    return "#22c55e";
+}
+
+const districtLayers = [];
+
+L.geoJSON(data, {
+
+          style: function(feature) {
+    return {
+        color: "#42e27b",
+        weight: 1,
+        fillColor: getRiskColor(getDistrictRisk(feature)),
+        fillOpacity: 0.65
+    };
+},
+
+            onEachFeature: function(feature, layer) {
+districtLayers.push({
+    layer: layer,
+    risk: getDistrictRisk(feature)
+});
+                const district =
+                    feature.properties.DISTRICT ||
+                    feature.properties.district ||
+                    feature.properties.NAME ||
+                    "District";
+
+                const risk = getDistrictRisk(feature);
+
+const riskLabel =
+    risk.charAt(0).toUpperCase() + risk.slice(1);
+
+layer.bindPopup(`
+    <div class="district-popup">
+        <div class="popup-label">
+            DISTRICT
+        </div>
+
+        <h3>${district}</h3>
+
+        <div class="popup-risk">
+            <span class="popup-dot ${risk}-dot"></span>
+            <span>
+                Risk Level: <strong>${riskLabel}</strong>
+            </span>
+        </div>
+
+        <div class="popup-note">
+            Climate risk assessment
+        </div>
+    </div>
+`);
+
+                layer.on({
+                    mouseover: function(e) {
+                        e.target.setStyle({
+                            weight: 2,
+                            color: "#42e27b",
+                            fillOpacity: 0.85
+                        });
+                    },
+
+                    mouseout: function(e) {
+                        e.target.setStyle({
+                            weight: 1,
+                            color: "#42e27b",
+                            fillOpacity: 0.65
+                        });
+                    }
+                });
+            }
+
+        }).addTo(map);
+
+    })
+
+    .catch(error => {
+        console.error(
+            "GeoJSON could not be loaded:",
+            error
+        );
+    });
+function filterRisk(selectedRisk) {
+
+    districtLayers.forEach(item => {
+
+        if (item.risk === selectedRisk) {
+            item.layer.setStyle({
+                opacity: 1,
+                fillOpacity: 0.75
+            });
+        } else {
+            item.layer.setStyle({
+                opacity: 0.15,
+                fillOpacity: 0.05
+            });
+        }
+
+    });
+
+}
+
+
+function showAllRisks() {
+
+    districtLayers.forEach(item => {
+
+        item.layer.setStyle({
+            opacity: 1,
+            fillOpacity: 0.65
+        });
+
+    });
+
+}
+    </script>
+
+</body>
+
+</html>
